@@ -1,19 +1,12 @@
 # README
 
-[![Travis Build Status](https://travis-ci.org/egeloen/ivory-serializer.svg?branch=master)](http://travis-ci.org/egeloen/ivory-serializer)
-[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/q2htd5scotsvjhox/branch/master?svg=true)](https://ci.appveyor.com/project/egeloen/ivory-serializer/branch/master)
-[![Code Coverage](https://scrutinizer-ci.com/g/egeloen/ivory-serializer/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/egeloen/ivory-serializer/?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/egeloen/ivory-serializer/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/egeloen/ivory-serializer/?branch=master)
-[![Dependency Status](http://www.versioneye.com/php/egeloen:serializer/badge.svg)](http://www.versioneye.com/php/egeloen:serializer)
-
-[![Latest Stable Version](https://poser.pugx.org/egeloen/serializer/v/stable.svg)](https://packagist.org/packages/egeloen/serializer)
-[![Latest Unstable Version](https://poser.pugx.org/egeloen/serializer/v/unstable.svg)](https://packagist.org/packages/egeloen/serializer)
-[![Total Downloads](https://poser.pugx.org/egeloen/serializer/downloads.svg)](https://packagist.org/packages/egeloen/serializer)
-[![License](https://poser.pugx.org/egeloen/serializer/license.svg)](https://packagist.org/packages/egeloen/serializer)
+[![Travis Build Status](https://api.travis-ci.com/bresam/ivory-serializer.svg?branch=master)](https://travis-ci.com/github/bresam/ivory-serializer)
+[![Code Coverage](https://scrutinizer-ci.com/g/bresam/ivory-serializer/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/bresam/ivory-serializer/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bresam/ivory-serializer/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bresam/ivory-serializer/?branch=master)
 
 ## Overview
 
-The Ivory Serializer is a PHP 5.6+ library allowing you to (de)-serialize complex data using the visitor pattern 
+The Ivory Serializer is a PHP ^7.0 library allowing you to (de)-serialize complex data using the visitor pattern 
 recursively on each node of the graph. It supports the CSV, JSON, XML and YAML formats. It also supports features such 
 as exclusion strategies (groups, max depth, circular reference, version, ...), naming strategies (camel case, snake 
 case, studly caps), automatic/explicit mapping (reflection, annotation, XML, YAML, JSON) and many others...
@@ -46,6 +39,7 @@ $deserialize = $serializer->deserialize($json, \stdClass::class, Format::JSON);
   - [Context](/doc/context.md)
     - [Exclusion strategies](/doc/context.md#exclusion-strategies)
     - [Naming strategies](/doc/context.md#naming-strategies)
+  - [Development Environment](/doc/development_environment.md)
 
 ## Testing
 

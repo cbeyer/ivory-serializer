@@ -1,33 +1,24 @@
 language: php
 
+os: linux
+dist: xenial
+
 php:
-    - 5.6.26
-    - 7.0
-    - 7.1
-    - hhvm
+    - '7.0'
+    - '7.1'
+    - '7.2'
+    - '7.3'
 
 branches:
-    only: master
+    except:
+        - /^skip-travis-.*$/
 
-env:
-    global:
-        - COMPOSER_PREFER_LOWEST=false
-        - DOCKER_BUILD=false
-        - SYMFONY_DEPRECATIONS_HELPER=strict
-
-before_script: travis/install.sh
+install: travis/install.sh
 script: travis/script.sh
 after_success: travis/success.sh
 
-matrix:
-    include:
-        - php: 5.6
-          services: [docker]
-          env: DOCKER_BUILD=true
-        - php: 5.6.26
-          env: COMPOSER_PREFER_LOWEST=true
-    allow_failures:
-        - php: hhvm
+git:
+    submodules: false
 
 notifications:
-    email: geloen.eric@gmail.com
+    email: samuel.breu@bresam.ch
