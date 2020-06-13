@@ -2,4 +2,4 @@
 
 set -e
 
-vendor/bin/phpunit --configuration phpunit.ci.xml --coverage-clover clover.xml
+vendor/bin/phpunit --coverage-clover clover.xml
