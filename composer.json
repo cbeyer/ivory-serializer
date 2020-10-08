@@ -27,7 +27,6 @@
         "ext-dom": "*",
         "ext-simplexml": "*",
         "friendsofphp/php-cs-fixer": "^2.0",
-        "nikic/php-parser": "^1.4",
         "phpdocumentor/reflection": "^3.0",
         "phpunit/phpunit": "^5.4 || ^6.5",
         "phpunit/phpunit-mock-objects": "^3.2.3 || ^5.0",
