@@ -53,7 +53,7 @@ use Ivory\Tests\Serializer\Fixture\XmlValueFixture;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class SerializerTest extends \PHPUnit_Framework_TestCase
+class SerializerTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Serializer
@@ -63,22 +63,21 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->serializer = new Serializer();
     }
 
     /**
-     * @param string                $name
-     * @param mixed                 $data
-     * @param string                $format
-     * @param ContextInterface|null $context
+     * @param string $name
+     * @param mixed  $data
+     * @param string $format
      *
      * @dataProvider serializeProvider
      */
-    public function testSerialize($name, $data, $format, ContextInterface $context = null)
+    public function testSerialize($name, $data, $format, ContextInterface $context = null): void
     {
-        $this->assertSame($this->getDataSet($name, $format), $this->serializer->serialize($data, $format, $context));
+        self::assertSame($this->getDataSet($name, $format), $this->serializer->serialize($data, $format, $context));
     }
 
     /**
@@ -88,30 +87,33 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider serializeExceptionProvider
      */
-    public function testSerializeException($name, $data, $format)
+    public function testSerializeException($name, $data, $format): void
     {
         $this->serializer = new Serializer(new Navigator(TypeRegistry::create([
             Type::EXCEPTION => new ExceptionType(true),
         ])));
 
-        $this->assertRegExp(
+        self::assertMatchesRegularExpression(
             '/^'.$this->getDataSet($name.'_debug', $format).'$/s',
             $this->serializer->serialize($data, $format)
         );
     }
 
     /**
-     * @param string                $name
-     * @param mixed                 $data
-     * @param string                $type
-     * @param string                $format
-     * @param ContextInterface|null $context
+     * @param string $name
+     * @param mixed  $data
+     * @param string $type
+     * @param string $format
      *
      * @dataProvider deserializeProvider
      */
-    public function testDeserialize($name, $data, $type, $format, ContextInterface $context = null)
+    public function testDeserialize($name, $data, $type, $format, ContextInterface $context = null): void
     {
-        $result = $this->serializer->deserialize($this->getDataSet($name, $format), $type, $format, $context);
+        try {
+            $result = $this->serializer->deserialize($this->getDataSet($name, $format), $type, $format, $context);
+        } catch (\RuntimeException $e) {
+            $test = null;
+        }
 
         foreach ([&$data, &$result] as &$value) {
             if ($value instanceof FixtureInterface) {
@@ -123,7 +125,9 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
             }
         }
 
-        $this->assertSame($data, $result);
+        unset($value);
+
+        self::assertSame($data, $result);
     }
 
     /**
@@ -133,7 +137,7 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider unsupportedTypeProvider
      */
-    public function testDeserializeWithInvalidType($message, $type, $format)
+    public function testDeserializeWithInvalidType($message, $type, $format): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage($message);
@@ -141,12 +145,10 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
         $this->serializer->deserialize($this->getDataSet('string', $format), $type, $format);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The visitor for direction "deserialization" and format "txt" does not exist.
-     */
-    public function testDeserializeWithInvalidFormat()
+    public function testDeserializeWithInvalidFormat(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The visitor for direction "deserialization" and format "txt" does not exist');
         $this->serializer->deserialize('data', Type::STRING, 'txt');
     }
 
@@ -440,7 +442,7 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
     {
         $extension = $format;
 
-        if ($extension === Format::YAML) {
+        if (Format::YAML === $extension) {
             $extension = 'yml';
         }
 

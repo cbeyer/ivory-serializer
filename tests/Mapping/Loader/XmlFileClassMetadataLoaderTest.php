@@ -18,61 +18,71 @@ use Ivory\Serializer\Mapping\Loader\FileClassMetadataLoader;
  */
 class XmlFileClassMetadataLoaderTest extends AbstractFileClassMetadataLoaderTest
 {
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessageRegExp /^The file ".+" is not supported\.$/
-     */
-    public function testUnsupportedFile()
+    public function testUnsupportedFile(): void
     {
+        $this->expectExceptionMessageMatches("/^The file \".+\" is not supported\.$/");
+        $this->expectException(\InvalidArgumentException::class);
         new FileClassMetadataLoader(__DIR__.'/../../Fixture/config/xml/mapping/ignore.txt');
     }
 
-    public function testDocumentType()
+    public function testDocumentType(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
-    public function testExclude()
+    public function testExclude(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
-    public function testExpose()
+    public function testExpose(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
-    public function testReadable()
+    public function testReadable(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
-    public function testReadableClass()
+    public function testReadableClass(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
-    public function testWritable()
+    public function testWritable(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
-    public function testWritableClass()
+    public function testWritableClass(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
-    public function testXmlAttribute()
+    public function testXmlAttribute(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
-    public function testXmlValue()
+    public function testXmlValue(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
-    public function testXmlInline()
+    public function testXmlInline(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
-    public function testXmlKeyAsAttribute()
+    public function testXmlKeyAsAttribute(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
-    public function testXmlKeyAsNode()
+    public function testXmlKeyAsNode(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
     /**

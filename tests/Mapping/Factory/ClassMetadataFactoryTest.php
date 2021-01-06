@@ -21,7 +21,7 @@ use Ivory\Tests\Serializer\Fixture\ScalarFixture;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ClassMetadataFactoryTest extends \PHPUnit_Framework_TestCase
+class ClassMetadataFactoryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var ClassMetadataFactory
@@ -29,99 +29,97 @@ class ClassMetadataFactoryTest extends \PHPUnit_Framework_TestCase
     private $factory;
 
     /**
-     * @var ClassMetadataLoaderInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var ClassMetadataLoaderInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     private $loader;
 
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->loader = $this->createClassMetadataLoaderMock();
         $this->factory = new ClassMetadataFactory($this->loader);
     }
 
-    public function testInheritance()
+    public function testInheritance(): void
     {
-        $this->assertInstanceOf(ClassMetadataFactoryInterface::class, $this->factory);
+        self::assertInstanceOf(ClassMetadataFactoryInterface::class, $this->factory);
     }
 
-    public function testClassMetadata()
+    public function testClassMetadata(): void
     {
         $class = \stdClass::class;
         $expected = null;
 
         $this->loader
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadClassMetadata')
-            ->with($this->callback(function ($classMetadata) use ($class, &$expected) {
+            ->with(self::callback(function ($classMetadata) use ($class, &$expected) {
                 $expected = $classMetadata;
 
                 return $classMetadata instanceof ClassMetadata && $classMetadata->getName() === $class;
             }))
-            ->will($this->returnValue(true));
+            ->will(self::returnValue(true));
 
         $firstResult = $this->factory->getClassMetadata($class);
         $secondResult = $this->factory->getClassMetadata($class);
 
-        $this->assertSame($expected, $firstResult);
-        $this->assertSame($expected, $secondResult);
+        self::assertSame($expected, $firstResult);
+        self::assertSame($expected, $secondResult);
     }
 
-    public function testClassMetadataInheritance()
+    public function testClassMetadataInheritance(): void
     {
         $expected = [];
 
         $this->loader
             ->expects($this->exactly(2))
             ->method('loadClassMetadata')
-            ->with($this->callback(function ($classMetadata) use (&$expected) {
+            ->with(self::callback(function ($classMetadata) use (&$expected) {
                 $expected[] = $classMetadata;
 
                 return $classMetadata instanceof ClassMetadata;
             }))
-            ->will($this->returnValue(true));
+            ->will(self::returnValue(true));
 
         $firstResult = $this->factory->getClassMetadata($class = ExtendedScalarFixture::class);
         $secondResult = $this->factory->getClassMetadata($class);
 
-        $this->assertArrayHasKey(0, $expected);
-        $this->assertSame(ScalarFixture::class, $expected[0]->getName());
+        self::assertArrayHasKey(0, $expected);
+        self::assertSame(ScalarFixture::class, $expected[0]->getName());
 
-        $this->assertArrayHasKey(1, $expected);
-        $this->assertSame($class, $expected[1]->getName());
+        self::assertArrayHasKey(1, $expected);
+        self::assertSame($class, $expected[1]->getName());
 
-        $this->assertSame($expected[1], $firstResult);
-        $this->assertSame($expected[1], $secondResult);
+        self::assertSame($expected[1], $firstResult);
+        self::assertSame($expected[1], $secondResult);
     }
 
-    public function testClassMetadataDoesNotExist()
+    public function testClassMetadataDoesNotExist(): void
     {
         $class = \stdClass::class;
 
         $this->loader
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadClassMetadata')
-            ->with($this->callback(function ($classMetadata) use ($class) {
+            ->with(self::callback(function ($classMetadata) use ($class) {
                 return $classMetadata instanceof ClassMetadata && $classMetadata->getName() === $class;
             }))
-            ->will($this->returnValue(false));
+            ->will(self::returnValue(false));
 
-        $this->assertNull($this->factory->getClassMetadata($class));
-        $this->assertNull($this->factory->getClassMetadata($class));
+        self::assertNull($this->factory->getClassMetadata($class));
+        self::assertNull($this->factory->getClassMetadata($class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testClassMetadataInvalid()
+    public function testClassMetadataInvalid(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->factory->getClassMetadata('foo');
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ClassMetadataLoaderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|ClassMetadataLoaderInterface
      */
     private function createClassMetadataLoaderMock()
     {

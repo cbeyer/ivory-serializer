@@ -13,6 +13,7 @@ namespace Ivory\Tests\Serializer\Mapping\Loader;
 
 use Ivory\Serializer\Mapping\ClassMetadata;
 use Ivory\Serializer\Mapping\Loader\MappedClassMetadataLoaderInterface;
+use Ivory\Serializer\Mapping\Loader\YamlClassMetadataLoader;
 use Ivory\Tests\Serializer\Fixture\AccessorFixture;
 use Ivory\Tests\Serializer\Fixture\ArrayFixture;
 use Ivory\Tests\Serializer\Fixture\AscFixture;
@@ -38,424 +39,364 @@ use Ivory\Tests\Serializer\Fixture\XmlValueFixture;
  */
 abstract class AbstractFileClassMetadataLoaderTest extends AbstractClassMetadataLoaderTest
 {
-    public function testInheritance()
+    public function testInheritance(): void
     {
-        $this->assertInstanceOf(MappedClassMetadataLoaderInterface::class, $this->loader);
+        self::assertInstanceOf(MappedClassMetadataLoaderInterface::class, $this->loader);
 
         parent::testInheritance();
     }
 
-    public function testArrayFixture()
+    public function testArrayFixture(): void
     {
         $this->assertMappedClasses();
 
         parent::testArrayFixture();
     }
 
-    public function testScalarFixture()
+    public function testScalarFixture(): void
     {
         $this->assertMappedClasses();
 
         parent::testScalarFixture();
     }
 
-    public function testDateTimeFixture()
+    public function testDateTimeFixture(): void
     {
         $this->assertMappedClasses();
 
         parent::testDateTimeFixture();
     }
 
-    public function testExcludeFixture()
+    public function testExcludeFixture(): void
     {
         $this->assertMappedClasses();
 
         parent::testExcludeFixture();
     }
 
-    public function testExposeFixture()
+    public function testExposeFixture(): void
     {
         $this->assertMappedClasses();
 
         parent::testExposeFixture();
     }
 
-    public function testReadableFixture()
+    public function testReadableFixture(): void
     {
         $this->assertMappedClasses();
 
         parent::testReadableFixture();
     }
 
-    public function testReadableClassFixture()
+    public function testReadableClassFixture(): void
     {
         $this->assertMappedClasses();
 
         parent::testReadableClassFixture();
     }
 
-    public function testWritableFixture()
+    public function testWritableFixture(): void
     {
         $this->assertMappedClasses();
 
         parent::testWritableFixture();
     }
 
-    public function testWritableClassFixture()
+    public function testWritableClassFixture(): void
     {
         $this->assertMappedClasses();
 
         parent::testWritableClassFixture();
     }
 
-    public function testAccessorFixture()
+    public function testAccessorFixture(): void
     {
         $this->assertMappedClasses();
 
         parent::testAccessorFixture();
     }
 
-    public function testMutatorFixture()
+    public function testMutatorFixture(): void
     {
         $this->assertMappedClasses();
 
         parent::testMutatorFixture();
     }
 
-    public function testMaxDepthFixture()
+    public function testMaxDepthFixture(): void
     {
         $this->assertMappedClasses();
 
         parent::testMaxDepthFixture();
     }
 
-    public function testGroupFixture()
+    public function testGroupFixture(): void
     {
         $this->assertMappedClasses();
 
         parent::testGroupFixture();
     }
 
-    public function testOrderFixture()
+    public function testOrderFixture(): void
     {
         $this->assertMappedClasses();
 
         parent::testOrderFixture();
     }
 
-    public function testAscFixture()
+    public function testAscFixture(): void
     {
         $this->assertMappedClasses();
 
         parent::testAscFixture();
     }
 
-    public function testDescFixture()
+    public function testDescFixture(): void
     {
         $this->assertMappedClasses();
 
         parent::testDescFixture();
     }
 
-    public function testVersionFixture()
+    public function testVersionFixture(): void
     {
         $this->assertMappedClasses();
 
         parent::testVersionFixture();
     }
 
-    public function testXmlFixture()
+    public function testXmlFixture(): void
     {
         $this->assertMappedClasses();
 
         parent::testXmlFixture();
     }
 
-    public function testXmlValueFixture()
+    public function testXmlValueFixture(): void
     {
         $this->assertMappedClasses();
 
         parent::testXmlValueFixture();
     }
 
-    public function testUnknownFixture()
+    public function testUnknownFixture(): void
     {
         $this->assertMappedClasses();
 
         parent::testUnknownFixture();
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testFileNotFound()
+    public function testFileNotFound(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->createLoader('foo');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testFileNotReadable()
+    public function testFileNotReadable(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->createLoader('lock');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testMalformed()
     {
         $this->loader = $this->createLoader('malformed');
+        $this->expectException(\InvalidArgumentException::class);
         $this->loadClassMetadata(new ClassMetadata(\stdClass::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testExclusionPolicy()
+    public function testExclusionPolicy(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('exclusion_policy');
         $this->loadClassMetadata(new ClassMetadata(ExcludeFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testExclude()
+    public function testExclude(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('exclude');
         $this->loadClassMetadata(new ClassMetadata(ExcludeFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testExpose()
+    public function testExpose(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('expose');
         $this->loadClassMetadata(new ClassMetadata(ExposeFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testReadable()
+    public function testReadable(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('readable');
         $this->loadClassMetadata(new ClassMetadata(ReadableFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testReadableClass()
+    public function testReadableClass(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('readable_class');
         $this->loadClassMetadata(new ClassMetadata(ReadableClassFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testWritable()
+    public function testWritable(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('writable');
         $this->loadClassMetadata(new ClassMetadata(WritableFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testWritableClass()
+    public function testWritableClass(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('writable_class');
         $this->loadClassMetadata(new ClassMetadata(WritableClassFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testAccessor()
+    public function testAccessor(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('accessor');
         $this->loadClassMetadata(new ClassMetadata(AccessorFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testMutator()
+    public function testMutator(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('mutator');
         $this->loadClassMetadata(new ClassMetadata(MutatorFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testOrder()
+    public function testOrder(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('order');
         $this->loadClassMetadata(new ClassMetadata(OrderFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testOrderEmpty()
+    public function testOrderEmpty(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('order_empty');
         $this->loadClassMetadata(new ClassMetadata(OrderFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testOrderEmptyProperty()
+    public function testOrderEmptyProperty(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('order_empty_property');
         $this->loadClassMetadata(new ClassMetadata(OrderFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testProperties()
+    public function testProperties(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('properties');
         $this->loadClassMetadata(new ClassMetadata(\stdClass::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testPropertyAlias()
+    public function testPropertyAlias(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('alias');
         $this->loadClassMetadata(new ClassMetadata(ScalarFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testPropertyType()
+    public function testPropertyType(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('type');
         $this->loadClassMetadata(new ClassMetadata(ScalarFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testPropertySince()
+    public function testPropertySince(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('since');
         $this->loadClassMetadata(new ClassMetadata(VersionFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testPropertyUntil()
+    public function testPropertyUntil(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('until');
         $this->loadClassMetadata(new ClassMetadata(VersionFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testPropertyMaxDepth()
+    public function testPropertyMaxDepth(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('max_depth');
         $this->loadClassMetadata(new ClassMetadata(MaxDepthFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testPropertyGroups()
+    public function testPropertyGroups(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('groups');
         $this->loadClassMetadata(new ClassMetadata(GroupFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testXmlRoot()
+    public function testXmlRoot(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('xml_root');
         $this->loadClassMetadata(new ClassMetadata(XmlFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testXmlAttribute()
+    public function testXmlAttribute(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('xml_attribute');
         $this->loadClassMetadata(new ClassMetadata(XmlFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testXmlEntry()
+    public function testXmlEntry(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('xml_entry');
         $this->loadClassMetadata(new ClassMetadata(XmlFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testXmlEntryAttribute()
+    public function testXmlEntryAttribute(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('xml_entry_attribute');
         $this->loadClassMetadata(new ClassMetadata(XmlFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testXmlKeyAsAttribute()
+    public function testXmlKeyAsAttribute(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('xml_key_as_attribute');
         $this->loadClassMetadata(new ClassMetadata(XmlFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testXmlKeyAsNode()
+    public function testXmlKeyAsNode(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('xml_key_as_node');
         $this->loadClassMetadata(new ClassMetadata(XmlFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testXmlInline()
+    public function testXmlInline(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('xml_inline');
         $this->loadClassMetadata(new ClassMetadata(XmlFixture::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testXmlValue()
+    public function testXmlValue(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('xml_value');
         $this->loadClassMetadata(new ClassMetadata(XmlValueFixture::class));
     }
 
     protected function assertMappedClasses()
     {
-        $this->assertSame([
+        self::assertSame([
             ArrayFixture::class,
             ScalarFixture::class,
             DateTimeFixture::class,

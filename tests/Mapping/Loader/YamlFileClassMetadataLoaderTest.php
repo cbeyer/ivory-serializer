@@ -18,12 +18,10 @@ use Ivory\Serializer\Mapping\Loader\FileClassMetadataLoader;
  */
 class YamlFileClassMetadataLoaderTest extends AbstractFileClassMetadataLoaderTest
 {
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessageRegExp /^The file ".+" is not supported\.$/
-     */
-    public function testUnsupportedFile()
+    public function testUnsupportedFile(): void
     {
+        $this->expectExceptionMessageMatches("/^The file \".+\" is not supported\.$/");
+        $this->expectException(\InvalidArgumentException::class);
         new FileClassMetadataLoader(__DIR__.'/../../Fixture/config/yaml/mapping/ignore.txt');
     }
 

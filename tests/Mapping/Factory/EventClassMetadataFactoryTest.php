@@ -22,7 +22,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class EventClassMetadataFactoryTest extends \PHPUnit_Framework_TestCase
+class EventClassMetadataFactoryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var EventClassMetadataFactory
@@ -30,19 +30,19 @@ class EventClassMetadataFactoryTest extends \PHPUnit_Framework_TestCase
     private $eventFactory;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|ClassMetadataFactoryInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|ClassMetadataFactoryInterface
      */
     private $factory;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|EventDispatcherInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|EventDispatcherInterface
      */
     private $dispatcher;
 
     /**
      * {@inheritdoc}
      */
-    protected function setup()
+    protected function setUp(): void
     {
         $this->dispatcher = $this->createEventDispatcherMock();
         $this->factory = $this->createClassMetadataFactoryMock();
@@ -50,43 +50,42 @@ class EventClassMetadataFactoryTest extends \PHPUnit_Framework_TestCase
         $this->eventFactory = new EventClassMetadataFactory($this->factory, $this->dispatcher);
     }
 
-    public function testClassMetadataLoadEvent()
+    public function testClassMetadataLoadEvent(): void
     {
         $this->factory
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getClassMetadata')
-            ->with($this->identicalTo($class = \stdClass::class))
-            ->will($this->returnValue($classMetadata = $this->createClassMetadataMock()));
+            ->with(self::identicalTo($class = \stdClass::class))
+            ->willReturn($classMetadata = $this->createClassMetadataMock());
 
         $this->dispatcher
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('dispatch')
             ->with(
-                $this->identicalTo(SerializerEvents::CLASS_METADATA_LOAD),
-                $this->callback(function ($event) use ($classMetadata) {
+                self::callback(function ($event) use ($classMetadata) {
                     return $event instanceof ClassMetadataLoadEvent && $event->getClassMetadata() === $classMetadata;
-                })
+                }),
+                self::identicalTo(SerializerEvents::CLASS_METADATA_LOAD)
             );
 
-        $this->assertSame($classMetadata, $this->eventFactory->getClassMetadata($class));
+        self::assertSame($classMetadata, $this->eventFactory->getClassMetadata($class));
     }
 
-    public function testClassMetadataNotFoundEvent()
+    public function testClassMetadataNotFoundEvent(): void
     {
         $classMetadata = $this->createClassMetadataMock();
 
         $this->factory
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getClassMetadata')
-            ->with($this->identicalTo($class = \stdClass::class))
-            ->will($this->returnValue(null));
+            ->with(self::identicalTo($class = \stdClass::class))
+            ->willReturn(null);
 
         $this->dispatcher
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('dispatch')
             ->with(
-                $this->identicalTo(SerializerEvents::CLASS_METADATA_NOT_FOUND),
-                $this->callback(function ($event) use ($class, $classMetadata) {
+                self::callback(function ($event) use ($class, $classMetadata) {
                     if (!$event instanceof ClassMetadataNotFoundEvent) {
                         return false;
                     }
@@ -98,14 +97,15 @@ class EventClassMetadataFactoryTest extends \PHPUnit_Framework_TestCase
                     $event->setClassMetadata($classMetadata);
 
                     return true;
-                })
+                }),
+                self::identicalTo(SerializerEvents::CLASS_METADATA_NOT_FOUND)
             );
 
-        $this->assertSame($classMetadata, $this->eventFactory->getClassMetadata($class));
+        self::assertSame($classMetadata, $this->eventFactory->getClassMetadata($class));
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ClassMetadataFactoryInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|ClassMetadataFactoryInterface
      */
     private function createClassMetadataFactoryMock()
     {
@@ -113,7 +113,7 @@ class EventClassMetadataFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|EventDispatcherInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|EventDispatcherInterface
      */
     private function createEventDispatcherMock()
     {
@@ -121,7 +121,7 @@ class EventClassMetadataFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ClassMetadataInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|ClassMetadataInterface
      */
     private function createClassMetadataMock()
     {

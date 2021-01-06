@@ -18,7 +18,7 @@ use Ivory\Serializer\Mapping\PropertyMetadataInterface;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ClassMetadataTest extends \PHPUnit_Framework_TestCase
+class ClassMetadataTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var ClassMetadata
@@ -33,90 +33,90 @@ class ClassMetadataTest extends \PHPUnit_Framework_TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->name = \stdClass::class;
         $this->classMetadata = new ClassMetadata($this->name);
     }
 
-    public function testInheritance()
+    public function testInheritance(): void
     {
-        $this->assertInstanceOf(ClassMetadataInterface::class, $this->classMetadata);
+        self::assertInstanceOf(ClassMetadataInterface::class, $this->classMetadata);
     }
 
-    public function testDefaultState()
+    public function testDefaultState(): void
     {
-        $this->assertSame($this->name, $this->classMetadata->getName());
-        $this->assertFalse($this->classMetadata->hasProperties());
-        $this->assertEmpty($this->classMetadata->getProperties());
+        self::assertSame($this->name, $this->classMetadata->getName());
+        self::assertFalse($this->classMetadata->hasProperties());
+        self::assertEmpty($this->classMetadata->getProperties());
 
-        $this->assertFalse($this->classMetadata->hasXmlRoot());
-        $this->assertNull($this->classMetadata->getXmlRoot());
+        self::assertFalse($this->classMetadata->hasXmlRoot());
+        self::assertNull($this->classMetadata->getXmlRoot());
     }
 
-    public function testSetProperties()
+    public function testSetProperties(): void
     {
         $properties = [$name = 'foo' => $property = $this->createPropertyMetadataMock($name)];
 
         $this->classMetadata->setProperties($properties);
         $this->classMetadata->setProperties($properties);
 
-        $this->assertTrue($this->classMetadata->hasProperties());
-        $this->assertTrue($this->classMetadata->hasProperty($name));
-        $this->assertSame($property, $this->classMetadata->getProperty($name));
-        $this->assertSame($properties, $this->classMetadata->getProperties());
+        self::assertTrue($this->classMetadata->hasProperties());
+        self::assertTrue($this->classMetadata->hasProperty($name));
+        self::assertSame($property, $this->classMetadata->getProperty($name));
+        self::assertSame($properties, $this->classMetadata->getProperties());
     }
 
-    public function testAddProperty()
+    public function testAddProperty(): void
     {
         $this->classMetadata->addProperty($property = $this->createPropertyMetadataMock($name = 'foo'));
 
-        $this->assertTrue($this->classMetadata->hasProperties());
-        $this->assertTrue($this->classMetadata->hasProperty($name));
-        $this->assertSame($property, $this->classMetadata->getProperty($name));
-        $this->assertSame([$name => $property], $this->classMetadata->getProperties());
+        self::assertTrue($this->classMetadata->hasProperties());
+        self::assertTrue($this->classMetadata->hasProperty($name));
+        self::assertSame($property, $this->classMetadata->getProperty($name));
+        self::assertSame([$name => $property], $this->classMetadata->getProperties());
     }
 
-    public function testAddPropertyMerge()
+    public function testAddPropertyMerge(): void
     {
         $firstProperty = $this->createPropertyMetadataMock($name = 'foo');
         $secondProperty = $this->createPropertyMetadataMock($name);
 
         $firstProperty
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('merge')
-            ->with($this->identicalTo($secondProperty));
+            ->with(self::identicalTo($secondProperty));
 
         $this->classMetadata->addProperty($firstProperty);
         $this->classMetadata->addProperty($secondProperty);
 
-        $this->assertTrue($this->classMetadata->hasProperties());
-        $this->assertTrue($this->classMetadata->hasProperty($name));
-        $this->assertSame($firstProperty, $this->classMetadata->getProperty($name));
-        $this->assertNotSame($secondProperty, $this->classMetadata->getProperty($name));
-        $this->assertSame([$name => $firstProperty], $this->classMetadata->getProperties());
+        self::assertTrue($this->classMetadata->hasProperties());
+        self::assertTrue($this->classMetadata->hasProperty($name));
+        self::assertSame($firstProperty, $this->classMetadata->getProperty($name));
+        self::assertNotSame($secondProperty, $this->classMetadata->getProperty($name));
+        self::assertSame([$name => $firstProperty], $this->classMetadata->getProperties());
     }
 
-    public function testRemoveProperty()
+    public function testRemoveProperty(): void
     {
         $this->classMetadata->addProperty($property = $this->createPropertyMetadataMock($name = 'foo'));
         $this->classMetadata->removeProperty($name);
 
-        $this->assertFalse($this->classMetadata->hasProperties());
-        $this->assertFalse($this->classMetadata->hasProperty($name));
-        $this->assertNull($this->classMetadata->getProperty($name));
-        $this->assertEmpty($this->classMetadata->getProperties());
+        self::assertFalse($this->classMetadata->hasProperties());
+        self::assertFalse($this->classMetadata->hasProperty($name));
+        self::assertNull($this->classMetadata->getProperty($name));
+        self::assertEmpty($this->classMetadata->getProperties());
     }
 
-    public function testXmlRoot()
+    public function testXmlRoot(): void
     {
         $this->classMetadata->setXmlRoot($xmlRoot = 'root');
 
-        $this->assertTrue($this->classMetadata->hasXmlRoot());
-        $this->assertSame($xmlRoot, $this->classMetadata->getXmlRoot());
+        self::assertTrue($this->classMetadata->hasXmlRoot());
+        self::assertSame($xmlRoot, $this->classMetadata->getXmlRoot());
     }
 
-    public function testMerge()
+    public function testMerge(): void
     {
         $firstProperty = $this->createPropertyMetadataMock($firstName = 'foo');
         $secondProperty = $this->createPropertyMetadataMock($firstName);
@@ -128,30 +128,30 @@ class ClassMetadataTest extends \PHPUnit_Framework_TestCase
         $classMetadata->setXmlRoot($xmlRoot = 'root');
 
         $firstProperty
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('merge')
-            ->with($this->identicalTo($secondProperty));
+            ->with(self::identicalTo($secondProperty));
 
         $this->classMetadata->addProperty($firstProperty);
         $this->classMetadata->merge($classMetadata);
 
-        $this->assertSame(
+        self::assertSame(
             [$firstName => $firstProperty, $thirdName => $thirdProperty],
             $this->classMetadata->getProperties()
         );
 
-        $this->assertSame($xmlRoot, $this->classMetadata->getXmlRoot());
+        self::assertSame($xmlRoot, $this->classMetadata->getXmlRoot());
     }
 
-    public function testSerialize()
+    public function testSerialize(): void
     {
-        $this->assertEquals($this->classMetadata, unserialize(serialize($this->classMetadata)));
+        self::assertEquals($this->classMetadata, unserialize(serialize($this->classMetadata)));
     }
 
     /**
      * @param string $name
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|PropertyMetadataInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|PropertyMetadataInterface
      */
     private function createPropertyMetadataMock($name)
     {
@@ -159,7 +159,7 @@ class ClassMetadataTest extends \PHPUnit_Framework_TestCase
         $propertyMetadata
             ->expects($this->any())
             ->method('getName')
-            ->will($this->returnValue($name));
+            ->will(self::returnValue($name));
 
         return $propertyMetadata;
     }

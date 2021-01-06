@@ -16,7 +16,7 @@ use Ivory\Serializer\Naming\StudlyCapsNamingStrategy;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class StudlyCapsNamingStrategyTest extends \PHPUnit_Framework_TestCase
+class StudlyCapsNamingStrategyTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var StudlyCapsNamingStrategy
@@ -26,7 +26,7 @@ class StudlyCapsNamingStrategyTest extends \PHPUnit_Framework_TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->strategy = new StudlyCapsNamingStrategy();
     }
@@ -37,9 +37,9 @@ class StudlyCapsNamingStrategyTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider convertProvider
      */
-    public function testConvert($expected, $name)
+    public function testConvert($expected, $name): void
     {
-        $this->assertSame($expected, $this->strategy->convert($name));
+        self::assertSame($expected, $this->strategy->convert($name));
     }
 
     /**

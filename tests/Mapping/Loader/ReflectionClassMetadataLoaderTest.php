@@ -33,11 +33,11 @@ use Ivory\Tests\Serializer\Fixture\WritableFixture;
  */
 class ReflectionClassMetadataLoaderTest extends AbstractReflectionClassMetadataLoaderTest
 {
-    public function testArrayFixture()
+    public function testArrayFixture(): void
     {
         $classMetadata = new ClassMetadata(ArrayFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'scalars'    => [],
             'objects'    => [],
@@ -46,11 +46,11 @@ class ReflectionClassMetadataLoaderTest extends AbstractReflectionClassMetadataL
         ]);
     }
 
-    public function testScalarFixture()
+    public function testScalarFixture(): void
     {
         $classMetadata = new ClassMetadata(ScalarFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'bool'   => [],
             'float'  => [],
@@ -60,11 +60,11 @@ class ReflectionClassMetadataLoaderTest extends AbstractReflectionClassMetadataL
         ]);
     }
 
-    public function testDateTimeFixture()
+    public function testDateTimeFixture(): void
     {
         $classMetadata = new ClassMetadata(DateTimeFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'dateTime'                   => [],
             'formattedDateTime'          => [],
@@ -75,95 +75,95 @@ class ReflectionClassMetadataLoaderTest extends AbstractReflectionClassMetadataL
         ]);
     }
 
-    public function testExcludeFixture()
+    public function testExcludeFixture(): void
     {
         $classMetadata = new ClassMetadata(ExcludeFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'bar' => [],
         ]);
     }
 
-    public function testExposeFixture()
+    public function testExposeFixture(): void
     {
         $classMetadata = new ClassMetadata(ExposeFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'foo' => [],
         ]);
     }
 
-    public function testReadableFixture()
+    public function testReadableFixture(): void
     {
         $classMetadata = new ClassMetadata(ReadableFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'foo' => [],
             'bar' => [],
         ]);
     }
 
-    public function testReadableClassFixture()
+    public function testReadableClassFixture(): void
     {
         $classMetadata = new ClassMetadata(ReadableClassFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'foo' => [],
             'bar' => [],
         ]);
     }
 
-    public function testWritableFixture()
+    public function testWritableFixture(): void
     {
         $classMetadata = new ClassMetadata(WritableFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'foo' => [],
             'bar' => [],
         ]);
     }
 
-    public function testWritableClassFixture()
+    public function testWritableClassFixture(): void
     {
         $classMetadata = new ClassMetadata(WritableClassFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'foo' => [],
             'bar' => [],
         ]);
     }
 
-    public function testAccessorFixture()
+    public function testAccessorFixture(): void
     {
         $classMetadata = new ClassMetadata(AccessorFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'name' => [],
         ]);
     }
 
-    public function testMutatorFixture()
+    public function testMutatorFixture(): void
     {
         $classMetadata = new ClassMetadata(MutatorFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'name' => [],
         ]);
     }
 
-    public function testMaxDepthFixture()
+    public function testMaxDepthFixture(): void
     {
         $classMetadata = new ClassMetadata(MaxDepthFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'parent'         => [],
             'children'       => [],
@@ -171,11 +171,11 @@ class ReflectionClassMetadataLoaderTest extends AbstractReflectionClassMetadataL
         ]);
     }
 
-    public function testGroupFixture()
+    public function testGroupFixture(): void
     {
         $classMetadata = new ClassMetadata(GroupFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'foo' => [],
             'bar' => [],
@@ -184,11 +184,11 @@ class ReflectionClassMetadataLoaderTest extends AbstractReflectionClassMetadataL
         ]);
     }
 
-    public function testVersionFixture()
+    public function testVersionFixture(): void
     {
         $classMetadata = new ClassMetadata(VersionFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'foo' => [],
             'bar' => [],

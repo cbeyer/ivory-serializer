@@ -18,7 +18,7 @@ use Ivory\Serializer\Type\Type;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class TypeMetadataTest extends \PHPUnit_Framework_TestCase
+class TypeMetadataTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var TypeMetadata
@@ -33,65 +33,65 @@ class TypeMetadataTest extends \PHPUnit_Framework_TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->name = Type::STRING;
         $this->typeMetadata = new TypeMetadata($this->name);
     }
 
-    public function testInheritance()
+    public function testInheritance(): void
     {
-        $this->assertInstanceOf(TypeMetadataInterface::class, $this->typeMetadata);
+        self::assertInstanceOf(TypeMetadataInterface::class, $this->typeMetadata);
     }
 
-    public function testDefaultState()
+    public function testDefaultState(): void
     {
-        $this->assertSame($this->name, $this->typeMetadata->getName());
-        $this->assertFalse($this->typeMetadata->hasOptions());
-        $this->assertEmpty($this->typeMetadata->getOptions());
+        self::assertSame($this->name, $this->typeMetadata->getName());
+        self::assertFalse($this->typeMetadata->hasOptions());
+        self::assertEmpty($this->typeMetadata->getOptions());
     }
 
-    public function testName()
+    public function testName(): void
     {
         $this->typeMetadata->setName($name = Type::BOOL);
 
-        $this->assertSame($name, $this->typeMetadata->getName());
+        self::assertSame($name, $this->typeMetadata->getName());
     }
 
-    public function testSetOptions()
+    public function testSetOptions(): void
     {
         $this->typeMetadata->setOptions($options = [$option = 'foo' => $value = 'bar']);
 
-        $this->assertTrue($this->typeMetadata->hasOptions());
-        $this->assertTrue($this->typeMetadata->hasOption($option));
-        $this->assertSame($options, $this->typeMetadata->getOptions());
-        $this->assertSame($value, $this->typeMetadata->getOption($option));
+        self::assertTrue($this->typeMetadata->hasOptions());
+        self::assertTrue($this->typeMetadata->hasOption($option));
+        self::assertSame($options, $this->typeMetadata->getOptions());
+        self::assertSame($value, $this->typeMetadata->getOption($option));
     }
 
-    public function testSetOption()
+    public function testSetOption(): void
     {
         $this->typeMetadata->setOption($option = 'foo', $value = 'bar');
 
-        $this->assertTrue($this->typeMetadata->hasOptions());
-        $this->assertTrue($this->typeMetadata->hasOption($option));
-        $this->assertSame([$option => $value], $this->typeMetadata->getOptions());
-        $this->assertSame($value, $this->typeMetadata->getOption($option));
+        self::assertTrue($this->typeMetadata->hasOptions());
+        self::assertTrue($this->typeMetadata->hasOption($option));
+        self::assertSame([$option => $value], $this->typeMetadata->getOptions());
+        self::assertSame($value, $this->typeMetadata->getOption($option));
     }
 
-    public function testRemoveOption()
+    public function testRemoveOption(): void
     {
         $this->typeMetadata->setOption($option = 'foo', 'bar');
         $this->typeMetadata->removeOption($option);
 
-        $this->assertFalse($this->typeMetadata->hasOptions());
-        $this->assertFalse($this->typeMetadata->hasOption($option));
-        $this->assertEmpty($this->typeMetadata->getOptions());
-        $this->assertNull($this->typeMetadata->getOption($option));
-        $this->assertSame('bat', $this->typeMetadata->getOption($option, 'bat'));
+        self::assertFalse($this->typeMetadata->hasOptions());
+        self::assertFalse($this->typeMetadata->hasOption($option));
+        self::assertEmpty($this->typeMetadata->getOptions());
+        self::assertNull($this->typeMetadata->getOption($option));
+        self::assertSame('bat', $this->typeMetadata->getOption($option, 'bat'));
     }
 
-    public function testSerialize()
+    public function testSerialize(): void
     {
-        $this->assertEquals($this->typeMetadata, unserialize(serialize($this->typeMetadata)));
+        self::assertEquals($this->typeMetadata, unserialize(serialize($this->typeMetadata)));
     }
 }

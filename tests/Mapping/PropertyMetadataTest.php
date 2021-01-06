@@ -18,7 +18,7 @@ use Ivory\Serializer\Mapping\TypeMetadataInterface;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class PropertyMetadataTest extends \PHPUnit_Framework_TestCase
+class PropertyMetadataTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var PropertyMetadata
@@ -38,7 +38,7 @@ class PropertyMetadataTest extends \PHPUnit_Framework_TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->name = 'foo';
         $this->class = 'bar';
@@ -46,228 +46,228 @@ class PropertyMetadataTest extends \PHPUnit_Framework_TestCase
         $this->propertyMetadata = new PropertyMetadata($this->name, $this->class);
     }
 
-    public function testInheritance()
+    public function testInheritance(): void
     {
-        $this->assertInstanceOf(PropertyMetadataInterface::class, $this->propertyMetadata);
+        self::assertInstanceOf(PropertyMetadataInterface::class, $this->propertyMetadata);
     }
 
-    public function testDefaultState()
+    public function testDefaultState(): void
     {
-        $this->assertSame($this->name, $this->propertyMetadata->getName());
-        $this->assertSame($this->class, $this->propertyMetadata->getClass());
-        $this->assertFalse($this->propertyMetadata->hasAlias());
-        $this->assertNull($this->propertyMetadata->getAlias());
-        $this->assertFalse($this->propertyMetadata->hasType());
-        $this->assertNull($this->propertyMetadata->getType());
-        $this->assertTrue($this->propertyMetadata->isReadable());
-        $this->assertTrue($this->propertyMetadata->isWritable());
-        $this->assertFalse($this->propertyMetadata->hasAccessor());
-        $this->assertNull($this->propertyMetadata->getAccessor());
-        $this->assertFalse($this->propertyMetadata->hasMutator());
-        $this->assertNull($this->propertyMetadata->getMutator());
-        $this->assertFalse($this->propertyMetadata->hasSinceVersion());
-        $this->assertNull($this->propertyMetadata->getSinceVersion());
-        $this->assertFalse($this->propertyMetadata->hasUntilVersion());
-        $this->assertNull($this->propertyMetadata->getUntilVersion());
-        $this->assertFalse($this->propertyMetadata->hasMaxDepth());
-        $this->assertNull($this->propertyMetadata->getMaxDepth());
-        $this->assertFalse($this->propertyMetadata->hasGroups());
-        $this->assertEmpty($this->propertyMetadata->getGroups());
-        $this->assertFalse($this->propertyMetadata->hasXmlAttribute());
-        $this->assertFalse($this->propertyMetadata->isXmlAttribute());
-        $this->assertFalse($this->propertyMetadata->hasXmlValue());
-        $this->assertFalse($this->propertyMetadata->isXmlValue());
-        $this->assertFalse($this->propertyMetadata->hasXmlInline());
-        $this->assertFalse($this->propertyMetadata->isXmlInline());
-        $this->assertFalse($this->propertyMetadata->hasXmlEntry());
-        $this->assertNull($this->propertyMetadata->getXmlEntry());
-        $this->assertFalse($this->propertyMetadata->hasXmlEntryAttribute());
-        $this->assertNull($this->propertyMetadata->getXmlEntryAttribute());
-        $this->assertFalse($this->propertyMetadata->hasXmlKeyAsAttribute());
-        $this->assertNull($this->propertyMetadata->useXmlKeyAsAttribute());
-        $this->assertFalse($this->propertyMetadata->hasXmlKeyAsNode());
-        $this->assertNull($this->propertyMetadata->useXmlKeyAsNode());
+        self::assertSame($this->name, $this->propertyMetadata->getName());
+        self::assertSame($this->class, $this->propertyMetadata->getClass());
+        self::assertFalse($this->propertyMetadata->hasAlias());
+        self::assertNull($this->propertyMetadata->getAlias());
+        self::assertFalse($this->propertyMetadata->hasType());
+        self::assertNull($this->propertyMetadata->getType());
+        self::assertTrue($this->propertyMetadata->isReadable());
+        self::assertTrue($this->propertyMetadata->isWritable());
+        self::assertFalse($this->propertyMetadata->hasAccessor());
+        self::assertNull($this->propertyMetadata->getAccessor());
+        self::assertFalse($this->propertyMetadata->hasMutator());
+        self::assertNull($this->propertyMetadata->getMutator());
+        self::assertFalse($this->propertyMetadata->hasSinceVersion());
+        self::assertNull($this->propertyMetadata->getSinceVersion());
+        self::assertFalse($this->propertyMetadata->hasUntilVersion());
+        self::assertNull($this->propertyMetadata->getUntilVersion());
+        self::assertFalse($this->propertyMetadata->hasMaxDepth());
+        self::assertNull($this->propertyMetadata->getMaxDepth());
+        self::assertFalse($this->propertyMetadata->hasGroups());
+        self::assertEmpty($this->propertyMetadata->getGroups());
+        self::assertFalse($this->propertyMetadata->hasXmlAttribute());
+        self::assertFalse($this->propertyMetadata->isXmlAttribute());
+        self::assertFalse($this->propertyMetadata->hasXmlValue());
+        self::assertFalse($this->propertyMetadata->isXmlValue());
+        self::assertFalse($this->propertyMetadata->hasXmlInline());
+        self::assertFalse($this->propertyMetadata->isXmlInline());
+        self::assertFalse($this->propertyMetadata->hasXmlEntry());
+        self::assertNull($this->propertyMetadata->getXmlEntry());
+        self::assertFalse($this->propertyMetadata->hasXmlEntryAttribute());
+        self::assertNull($this->propertyMetadata->getXmlEntryAttribute());
+        self::assertFalse($this->propertyMetadata->hasXmlKeyAsAttribute());
+        self::assertNull($this->propertyMetadata->useXmlKeyAsAttribute());
+        self::assertFalse($this->propertyMetadata->hasXmlKeyAsNode());
+        self::assertNull($this->propertyMetadata->useXmlKeyAsNode());
     }
 
-    public function testName()
+    public function testName(): void
     {
         $this->propertyMetadata->setName($name = 'bar');
 
-        $this->assertSame($name, $this->propertyMetadata->getName());
+        self::assertSame($name, $this->propertyMetadata->getName());
     }
 
     public function tesClass()
     {
         $this->propertyMetadata->setClass($name = 'baz');
 
-        $this->assertSame($name, $this->propertyMetadata->getClass());
+        self::assertSame($name, $this->propertyMetadata->getClass());
     }
 
-    public function testAlias()
+    public function testAlias(): void
     {
         $this->propertyMetadata->setAlias($alias = 'bar');
 
-        $this->assertTrue($this->propertyMetadata->hasAlias());
-        $this->assertSame($alias, $this->propertyMetadata->getAlias());
+        self::assertTrue($this->propertyMetadata->hasAlias());
+        self::assertSame($alias, $this->propertyMetadata->getAlias());
     }
 
-    public function testType()
+    public function testType(): void
     {
         $this->propertyMetadata->setType($type = $this->createTypeMetadataMock());
 
-        $this->assertTrue($this->propertyMetadata->hasType());
-        $this->assertSame($type, $this->propertyMetadata->getType());
+        self::assertTrue($this->propertyMetadata->hasType());
+        self::assertSame($type, $this->propertyMetadata->getType());
     }
 
-    public function testReadable()
+    public function testReadable(): void
     {
         $this->propertyMetadata->setReadable(false);
 
-        $this->assertFalse($this->propertyMetadata->isReadable());
+        self::assertFalse($this->propertyMetadata->isReadable());
     }
 
-    public function testWritable()
+    public function testWritable(): void
     {
         $this->propertyMetadata->setWritable(false);
 
-        $this->assertFalse($this->propertyMetadata->isWritable());
+        self::assertFalse($this->propertyMetadata->isWritable());
     }
 
-    public function testAccessor()
+    public function testAccessor(): void
     {
         $this->propertyMetadata->setAccessor($accessor = 'foo');
 
-        $this->assertTrue($this->propertyMetadata->hasAccessor());
-        $this->assertSame($accessor, $this->propertyMetadata->getAccessor());
+        self::assertTrue($this->propertyMetadata->hasAccessor());
+        self::assertSame($accessor, $this->propertyMetadata->getAccessor());
     }
 
-    public function testMutator()
+    public function testMutator(): void
     {
         $this->propertyMetadata->setMutator($mutator = 'foo');
 
-        $this->assertTrue($this->propertyMetadata->hasMutator());
-        $this->assertSame($mutator, $this->propertyMetadata->getMutator());
+        self::assertTrue($this->propertyMetadata->hasMutator());
+        self::assertSame($mutator, $this->propertyMetadata->getMutator());
     }
 
-    public function testSinceVersion()
+    public function testSinceVersion(): void
     {
         $this->propertyMetadata->setSinceVersion($since = '1.0');
 
-        $this->assertTrue($this->propertyMetadata->hasSinceVersion());
-        $this->assertSame($since, $this->propertyMetadata->getSinceVersion());
+        self::assertTrue($this->propertyMetadata->hasSinceVersion());
+        self::assertSame($since, $this->propertyMetadata->getSinceVersion());
     }
 
-    public function testUntilVersion()
+    public function testUntilVersion(): void
     {
         $this->propertyMetadata->setUntilVersion($until = '1.0');
 
-        $this->assertTrue($this->propertyMetadata->hasUntilVersion());
-        $this->assertSame($until, $this->propertyMetadata->getUntilVersion());
+        self::assertTrue($this->propertyMetadata->hasUntilVersion());
+        self::assertSame($until, $this->propertyMetadata->getUntilVersion());
     }
 
-    public function testMaxDepth()
+    public function testMaxDepth(): void
     {
         $this->propertyMetadata->setMaxDepth($maxDepth = 512);
 
-        $this->assertTrue($this->propertyMetadata->hasMaxDepth());
-        $this->assertSame($maxDepth, $this->propertyMetadata->getMaxDepth());
+        self::assertTrue($this->propertyMetadata->hasMaxDepth());
+        self::assertSame($maxDepth, $this->propertyMetadata->getMaxDepth());
     }
 
-    public function testSetGroups()
+    public function testSetGroups(): void
     {
         $this->propertyMetadata->setGroups($groups = [$group = 'group']);
         $this->propertyMetadata->setGroups($groups);
 
-        $this->assertTrue($this->propertyMetadata->hasGroups());
-        $this->assertTrue($this->propertyMetadata->hasGroup($group));
-        $this->assertSame($groups, $this->propertyMetadata->getGroups());
+        self::assertTrue($this->propertyMetadata->hasGroups());
+        self::assertTrue($this->propertyMetadata->hasGroup($group));
+        self::assertSame($groups, $this->propertyMetadata->getGroups());
     }
 
-    public function testAddGroups()
+    public function testAddGroups(): void
     {
         $this->propertyMetadata->setGroups($firstGroups = ['group1']);
         $this->propertyMetadata->addGroups($secondGroups = ['group2']);
 
-        $this->assertTrue($this->propertyMetadata->hasGroups());
-        $this->assertSame(array_merge($firstGroups, $secondGroups), $this->propertyMetadata->getGroups());
+        self::assertTrue($this->propertyMetadata->hasGroups());
+        self::assertSame(array_merge($firstGroups, $secondGroups), $this->propertyMetadata->getGroups());
     }
 
-    public function testAddGroup()
+    public function testAddGroup(): void
     {
         $this->propertyMetadata->addGroup($group = 'group');
 
-        $this->assertTrue($this->propertyMetadata->hasGroups());
-        $this->assertTrue($this->propertyMetadata->hasGroup($group));
-        $this->assertSame([$group], $this->propertyMetadata->getGroups());
+        self::assertTrue($this->propertyMetadata->hasGroups());
+        self::assertTrue($this->propertyMetadata->hasGroup($group));
+        self::assertSame([$group], $this->propertyMetadata->getGroups());
     }
 
-    public function testRemoveGroup()
+    public function testRemoveGroup(): void
     {
         $this->propertyMetadata->addGroup($group = 'group');
         $this->propertyMetadata->removeGroup($group);
 
-        $this->assertFalse($this->propertyMetadata->hasGroups());
-        $this->assertFalse($this->propertyMetadata->hasGroup($group));
-        $this->assertEmpty($this->propertyMetadata->getGroups());
+        self::assertFalse($this->propertyMetadata->hasGroups());
+        self::assertFalse($this->propertyMetadata->hasGroup($group));
+        self::assertEmpty($this->propertyMetadata->getGroups());
     }
 
-    public function testXmlAttribute()
+    public function testXmlAttribute(): void
     {
         $this->propertyMetadata->setXmlAttribute(true);
 
-        $this->assertTrue($this->propertyMetadata->hasXmlAttribute());
-        $this->assertTrue($this->propertyMetadata->isXmlAttribute());
+        self::assertTrue($this->propertyMetadata->hasXmlAttribute());
+        self::assertTrue($this->propertyMetadata->isXmlAttribute());
     }
 
-    public function testXmlValue()
+    public function testXmlValue(): void
     {
         $this->propertyMetadata->setXmlValue(true);
 
-        $this->assertTrue($this->propertyMetadata->hasXmlValue());
-        $this->assertTrue($this->propertyMetadata->isXmlValue());
+        self::assertTrue($this->propertyMetadata->hasXmlValue());
+        self::assertTrue($this->propertyMetadata->isXmlValue());
     }
 
-    public function testXmlInline()
+    public function testXmlInline(): void
     {
         $this->propertyMetadata->setXmlInline(true);
 
-        $this->assertTrue($this->propertyMetadata->hasXmlInline());
-        $this->assertTrue($this->propertyMetadata->isXmlInline());
+        self::assertTrue($this->propertyMetadata->hasXmlInline());
+        self::assertTrue($this->propertyMetadata->isXmlInline());
     }
 
-    public function testXmlEntry()
+    public function testXmlEntry(): void
     {
         $this->propertyMetadata->setXmlEntry($entry = 'entry');
 
-        $this->assertTrue($this->propertyMetadata->hasXmlEntry());
-        $this->assertSame($entry, $this->propertyMetadata->getXmlEntry());
+        self::assertTrue($this->propertyMetadata->hasXmlEntry());
+        self::assertSame($entry, $this->propertyMetadata->getXmlEntry());
     }
 
-    public function testXmlEntryAttribute()
+    public function testXmlEntryAttribute(): void
     {
         $this->propertyMetadata->setXmlEntryAttribute($entryAttribute = 'key');
 
-        $this->assertTrue($this->propertyMetadata->hasXmlEntryAttribute());
-        $this->assertSame($entryAttribute, $this->propertyMetadata->getXmlEntryAttribute());
+        self::assertTrue($this->propertyMetadata->hasXmlEntryAttribute());
+        self::assertSame($entryAttribute, $this->propertyMetadata->getXmlEntryAttribute());
     }
 
-    public function testXmlKeyAsAttribute()
+    public function testXmlKeyAsAttribute(): void
     {
         $this->propertyMetadata->setXmlKeyAsAttribute(true);
 
-        $this->assertTrue($this->propertyMetadata->hasXmlKeyAsAttribute());
-        $this->assertTrue($this->propertyMetadata->useXmlKeyAsAttribute());
+        self::assertTrue($this->propertyMetadata->hasXmlKeyAsAttribute());
+        self::assertTrue($this->propertyMetadata->useXmlKeyAsAttribute());
     }
 
-    public function testXmlKeyAsNode()
+    public function testXmlKeyAsNode(): void
     {
         $this->propertyMetadata->setXmlKeyAsNode(true);
 
-        $this->assertTrue($this->propertyMetadata->hasXmlKeyAsNode());
-        $this->assertTrue($this->propertyMetadata->useXmlKeyAsNode());
+        self::assertTrue($this->propertyMetadata->hasXmlKeyAsNode());
+        self::assertTrue($this->propertyMetadata->useXmlKeyAsNode());
     }
 
-    public function testMerge()
+    public function testMerge(): void
     {
         $propertyMetadata = new PropertyMetadata($name = 'foo', $class = 'bar');
         $propertyMetadata->setAlias($alias = 'baz');
@@ -290,34 +290,34 @@ class PropertyMetadataTest extends \PHPUnit_Framework_TestCase
 
         $this->propertyMetadata->merge($propertyMetadata);
 
-        $this->assertSame($name, $this->propertyMetadata->getName());
-        $this->assertSame($class, $this->propertyMetadata->getClass());
-        $this->assertSame($alias, $this->propertyMetadata->getAlias());
-        $this->assertSame($type, $this->propertyMetadata->getType());
-        $this->assertTrue($this->propertyMetadata->isReadable());
-        $this->assertFalse($this->propertyMetadata->isWritable());
-        $this->assertSame($accessor, $this->propertyMetadata->getAccessor());
-        $this->assertSame($mutator, $this->propertyMetadata->getMutator());
-        $this->assertSame($sinceVersion, $this->propertyMetadata->getSinceVersion());
-        $this->assertSame($untilVersion, $this->propertyMetadata->getUntilVersion());
-        $this->assertSame($maxDepth, $this->propertyMetadata->getMaxDepth());
-        $this->assertSame($groups, $this->propertyMetadata->getGroups());
-        $this->assertTrue($this->propertyMetadata->isXmlAttribute());
-        $this->assertTrue($this->propertyMetadata->isXmlValue());
-        $this->assertTrue($this->propertyMetadata->isXmlInline());
-        $this->assertSame($entry, $this->propertyMetadata->getXmlEntry());
-        $this->assertSame($entryAttribute, $this->propertyMetadata->getXmlEntryAttribute());
-        $this->assertTrue($this->propertyMetadata->useXmlKeyAsAttribute());
-        $this->assertTrue($this->propertyMetadata->useXmlKeyAsNode());
+        self::assertSame($name, $this->propertyMetadata->getName());
+        self::assertSame($class, $this->propertyMetadata->getClass());
+        self::assertSame($alias, $this->propertyMetadata->getAlias());
+        self::assertSame($type, $this->propertyMetadata->getType());
+        self::assertTrue($this->propertyMetadata->isReadable());
+        self::assertFalse($this->propertyMetadata->isWritable());
+        self::assertSame($accessor, $this->propertyMetadata->getAccessor());
+        self::assertSame($mutator, $this->propertyMetadata->getMutator());
+        self::assertSame($sinceVersion, $this->propertyMetadata->getSinceVersion());
+        self::assertSame($untilVersion, $this->propertyMetadata->getUntilVersion());
+        self::assertSame($maxDepth, $this->propertyMetadata->getMaxDepth());
+        self::assertSame($groups, $this->propertyMetadata->getGroups());
+        self::assertTrue($this->propertyMetadata->isXmlAttribute());
+        self::assertTrue($this->propertyMetadata->isXmlValue());
+        self::assertTrue($this->propertyMetadata->isXmlInline());
+        self::assertSame($entry, $this->propertyMetadata->getXmlEntry());
+        self::assertSame($entryAttribute, $this->propertyMetadata->getXmlEntryAttribute());
+        self::assertTrue($this->propertyMetadata->useXmlKeyAsAttribute());
+        self::assertTrue($this->propertyMetadata->useXmlKeyAsNode());
     }
 
-    public function testSerialize()
+    public function testSerialize(): void
     {
-        $this->assertEquals($this->propertyMetadata, unserialize(serialize($this->propertyMetadata)));
+        self::assertEquals($this->propertyMetadata, unserialize(serialize($this->propertyMetadata)));
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|TypeMetadataInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|TypeMetadataInterface
      */
     private function createTypeMetadataMock()
     {

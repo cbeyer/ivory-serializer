@@ -19,75 +19,80 @@ use Ivory\Serializer\Mapping\Loader\XmlClassMetadataLoader;
  */
 class XmlClassMetadataLoaderTest extends AbstractFileClassMetadataLoaderTest
 {
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testMissingContent()
+    public function testMissingContent(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('content_missing');
         $this->loadClassMetadata(new ClassMetadata(\stdClass::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testDoctype()
+    public function testDoctype(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('doctype');
         $this->loadClassMetadata(new ClassMetadata(\stdClass::class));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testXsd()
+    public function testXsd(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('xsd');
         $this->loadClassMetadata(new ClassMetadata(\stdClass::class));
     }
 
-    public function testExclude()
+    public function testExclude(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
-    public function testExpose()
+    public function testExpose(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
-    public function testReadable()
+    public function testReadable(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
-    public function testReadableClass()
+    public function testReadableClass(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
-    public function testWritable()
+    public function testWritable(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
-    public function testWritableClass()
+    public function testWritableClass(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
-    public function testXmlAttribute()
+    public function testXmlAttribute(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
-    public function testXmlValue()
+    public function testXmlValue(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
-    public function testXmlInline()
+    public function testXmlInline(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
-    public function testXmlKeyAsAttribute()
+    public function testXmlKeyAsAttribute(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
-    public function testXmlKeyAsNode()
+    public function testXmlKeyAsNode(): void
     {
+        self::markTestSkipped('Not tested');
     }
 
     /**

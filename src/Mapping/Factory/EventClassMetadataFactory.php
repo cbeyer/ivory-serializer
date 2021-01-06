@@ -31,10 +31,6 @@ class EventClassMetadataFactory implements ClassMetadataFactoryInterface
      */
     private $dispatcher;
 
-    /**
-     * @param ClassMetadataFactoryInterface $factory
-     * @param EventDispatcherInterface      $dispatcher
-     */
     public function __construct(ClassMetadataFactoryInterface $factory, EventDispatcherInterface $dispatcher)
     {
         $this->factory = $factory;
@@ -48,15 +44,15 @@ class EventClassMetadataFactory implements ClassMetadataFactoryInterface
     {
         $classMetadata = $this->factory->getClassMetadata($class);
 
-        if ($classMetadata === null) {
+        if (null === $classMetadata) {
             $this->dispatcher->dispatch(
-                SerializerEvents::CLASS_METADATA_NOT_FOUND,
-                $event = new ClassMetadataNotFoundEvent($class)
+                $event = new ClassMetadataNotFoundEvent($class),
+                SerializerEvents::CLASS_METADATA_NOT_FOUND
             );
         } else {
             $this->dispatcher->dispatch(
-                SerializerEvents::CLASS_METADATA_LOAD,
-                $event = new ClassMetadataLoadEvent($classMetadata)
+                $event = new ClassMetadataLoadEvent($classMetadata),
+                SerializerEvents::CLASS_METADATA_LOAD
             );
         }
 

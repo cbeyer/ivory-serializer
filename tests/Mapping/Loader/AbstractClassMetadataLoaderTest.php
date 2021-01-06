@@ -38,7 +38,7 @@ use Ivory\Tests\Serializer\Fixture\XmlValueFixture;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-abstract class AbstractClassMetadataLoaderTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractClassMetadataLoaderTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var ClassMetadataLoaderInterface
@@ -48,21 +48,21 @@ abstract class AbstractClassMetadataLoaderTest extends \PHPUnit_Framework_TestCa
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->loader = $this->createLoader('mapping');
     }
 
-    public function testInheritance()
+    public function testInheritance(): void
     {
-        $this->assertInstanceOf(ClassMetadataLoaderInterface::class, $this->loader);
+        self::assertInstanceOf(ClassMetadataLoaderInterface::class, $this->loader);
     }
 
-    public function testArrayFixture()
+    public function testArrayFixture(): void
     {
         $classMetadata = new ClassMetadata(ArrayFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'scalars'    => ['type' => 'array<value=string>'],
             'objects'    => ['type' => 'array<value='.ArrayFixture::class.'>'],
@@ -71,11 +71,11 @@ abstract class AbstractClassMetadataLoaderTest extends \PHPUnit_Framework_TestCa
         ]);
     }
 
-    public function testScalarFixture()
+    public function testScalarFixture(): void
     {
         $classMetadata = new ClassMetadata(ScalarFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'bool'   => ['type' => 'bool', 'alias' => 'boolean'],
             'float'  => ['type' => 'float'],
@@ -85,11 +85,11 @@ abstract class AbstractClassMetadataLoaderTest extends \PHPUnit_Framework_TestCa
         ]);
     }
 
-    public function testDateTimeFixture()
+    public function testDateTimeFixture(): void
     {
         $classMetadata = new ClassMetadata(DateTimeFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'dateTime'                   => ['type' => 'DateTime'],
             'formattedDateTime'          => ['type' => 'DateTime<format=\'Y-m-d, H:i:s, P\'>'],
@@ -100,95 +100,95 @@ abstract class AbstractClassMetadataLoaderTest extends \PHPUnit_Framework_TestCa
         ]);
     }
 
-    public function testExcludeFixture()
+    public function testExcludeFixture(): void
     {
         $classMetadata = new ClassMetadata(ExcludeFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'bar' => [],
         ]);
     }
 
-    public function testExposeFixture()
+    public function testExposeFixture(): void
     {
         $classMetadata = new ClassMetadata(ExposeFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'foo' => [],
         ]);
     }
 
-    public function testReadableFixture()
+    public function testReadableFixture(): void
     {
         $classMetadata = new ClassMetadata(ReadableFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'foo' => ['readable' => false],
             'bar' => [],
         ]);
     }
 
-    public function testReadableClassFixture()
+    public function testReadableClassFixture(): void
     {
         $classMetadata = new ClassMetadata(ReadableClassFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'foo' => ['readable' => true],
             'bar' => ['readable' => false],
         ]);
     }
 
-    public function testWritableFixture()
+    public function testWritableFixture(): void
     {
         $classMetadata = new ClassMetadata(WritableFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'foo' => ['writable' => false],
             'bar' => [],
         ]);
     }
 
-    public function testWritableClassFixture()
+    public function testWritableClassFixture(): void
     {
         $classMetadata = new ClassMetadata(WritableClassFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'foo' => ['writable' => true],
             'bar' => ['writable' => false],
         ]);
     }
 
-    public function testAccessorFixture()
+    public function testAccessorFixture(): void
     {
         $classMetadata = new ClassMetadata(AccessorFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'name' => ['accessor' => 'getName'],
         ]);
     }
 
-    public function testMutatorFixture()
+    public function testMutatorFixture(): void
     {
         $classMetadata = new ClassMetadata(MutatorFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'name' => ['mutator' => 'setName'],
         ]);
     }
 
-    public function testMaxDepthFixture()
+    public function testMaxDepthFixture(): void
     {
         $classMetadata = new ClassMetadata(MaxDepthFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'parent'         => ['type' => MaxDepthFixture::class, 'max_depth' => 1],
             'children'       => ['type' => 'array<value='.MaxDepthFixture::class.'>', 'max_depth' => 2],
@@ -196,11 +196,11 @@ abstract class AbstractClassMetadataLoaderTest extends \PHPUnit_Framework_TestCa
         ]);
     }
 
-    public function testGroupFixture()
+    public function testGroupFixture(): void
     {
         $classMetadata = new ClassMetadata(GroupFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'foo' => ['groups' => ['group1', 'group2']],
             'bar' => ['groups' => ['group1']],
@@ -209,35 +209,35 @@ abstract class AbstractClassMetadataLoaderTest extends \PHPUnit_Framework_TestCa
         ]);
     }
 
-    public function testOrderFixture()
+    public function testOrderFixture(): void
     {
         $classMetadata = new ClassMetadata(OrderFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
-        $this->assertSame(['bar', 'foo'], array_keys($classMetadata->getProperties()));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertSame(['bar', 'foo'], array_keys($classMetadata->getProperties()));
     }
 
-    public function testAscFixture()
+    public function testAscFixture(): void
     {
         $classMetadata = new ClassMetadata(AscFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
-        $this->assertSame(['bar', 'foo'], array_keys($classMetadata->getProperties()));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertSame(['bar', 'foo'], array_keys($classMetadata->getProperties()));
     }
 
-    public function testDescFixture()
+    public function testDescFixture(): void
     {
         $classMetadata = new ClassMetadata(DescFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
-        $this->assertSame(['foo', 'bar'], array_keys($classMetadata->getProperties()));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertSame(['foo', 'bar'], array_keys($classMetadata->getProperties()));
     }
 
-    public function testVersionFixture()
+    public function testVersionFixture(): void
     {
         $classMetadata = new ClassMetadata(VersionFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'foo' => ['since' => '1.0', 'until' => '2.0'],
             'bar' => ['since' => '1.0'],
@@ -246,11 +246,11 @@ abstract class AbstractClassMetadataLoaderTest extends \PHPUnit_Framework_TestCa
         ]);
     }
 
-    public function testXmlFixture()
+    public function testXmlFixture(): void
     {
         $classMetadata = new ClassMetadata(XmlFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'foo'            => [],
             'bar'            => ['xml_attribute' => true],
@@ -269,20 +269,20 @@ abstract class AbstractClassMetadataLoaderTest extends \PHPUnit_Framework_TestCa
         ], ['xml_root' => 'xml']);
     }
 
-    public function testXmlValueFixture()
+    public function testXmlValueFixture(): void
     {
         $classMetadata = new ClassMetadata(XmlValueFixture::class);
 
-        $this->assertTrue($this->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loadClassMetadata($classMetadata));
         $this->assertClassMetadata($classMetadata, [
             'foo' => ['xml_attribute' => true],
             'bar' => ['xml_value' => true],
         ], ['xml_root' => 'xml']);
     }
 
-    public function testUnknownFixture()
+    public function testUnknownFixture(): void
     {
-        $this->assertFalse($this->loadClassMetadata(new ClassMetadata(\stdClass::class)));
+        self::assertFalse($this->loadClassMetadata(new ClassMetadata(\stdClass::class)));
     }
 
     /**
@@ -312,11 +312,11 @@ abstract class AbstractClassMetadataLoaderTest extends \PHPUnit_Framework_TestCa
         array $properties,
         array $options = []
     ) {
-        $this->assertSame(isset($options['xml_root']), $classMetadata->hasXmlRoot());
-        $this->assertSame(isset($options['xml_root']) ? $options['xml_root'] : null, $classMetadata->getXmlRoot());
+        self::assertSame(isset($options['xml_root']), $classMetadata->hasXmlRoot());
+        self::assertSame(isset($options['xml_root']) ? $options['xml_root'] : null, $classMetadata->getXmlRoot());
 
         foreach ($properties as $property => $data) {
-            $this->assertTrue($classMetadata->hasProperty($property));
+            self::assertTrue($classMetadata->hasProperty($property));
             $this->assertPropertyMetadata($classMetadata->getProperty($property), $data);
         }
     }
@@ -327,52 +327,52 @@ abstract class AbstractClassMetadataLoaderTest extends \PHPUnit_Framework_TestCa
      */
     private function assertPropertyMetadata(PropertyMetadataInterface $propertyMetadata, array $data)
     {
-        $this->assertSame(isset($data['alias']), $propertyMetadata->hasAlias());
-        $this->assertSame(isset($data['alias']) ? $data['alias'] : null, $propertyMetadata->getAlias());
+        self::assertSame(isset($data['alias']), $propertyMetadata->hasAlias());
+        self::assertSame(isset($data['alias']) ? $data['alias'] : null, $propertyMetadata->getAlias());
 
-        $this->assertSame(isset($data['type']), $propertyMetadata->hasType(), $propertyMetadata->getName());
-        $this->assertSame(
+        self::assertSame(isset($data['type']), $propertyMetadata->hasType(), $propertyMetadata->getName());
+        self::assertSame(
             isset($data['type']) ? $data['type'] : null,
             $propertyMetadata->hasType() ? (string) $propertyMetadata->getType() : null
         );
 
-        $this->assertSame(isset($data['readable']) ? $data['readable'] : true, $propertyMetadata->isReadable());
-        $this->assertSame(isset($data['writable']) ? $data['writable'] : true, $propertyMetadata->isWritable());
+        self::assertSame(isset($data['readable']) ? $data['readable'] : true, $propertyMetadata->isReadable());
+        self::assertSame(isset($data['writable']) ? $data['writable'] : true, $propertyMetadata->isWritable());
 
-        $this->assertSame(isset($data['accessor']), $propertyMetadata->hasAccessor());
-        $this->assertSame(isset($data['accessor']) ? $data['accessor'] : null, $propertyMetadata->getAccessor());
+        self::assertSame(isset($data['accessor']), $propertyMetadata->hasAccessor());
+        self::assertSame(isset($data['accessor']) ? $data['accessor'] : null, $propertyMetadata->getAccessor());
 
-        $this->assertSame(isset($data['mutator']), $propertyMetadata->hasMutator());
-        $this->assertSame(isset($data['mutator']) ? $data['mutator'] : null, $propertyMetadata->getMutator());
+        self::assertSame(isset($data['mutator']), $propertyMetadata->hasMutator());
+        self::assertSame(isset($data['mutator']) ? $data['mutator'] : null, $propertyMetadata->getMutator());
 
-        $this->assertSame(isset($data['since']), $propertyMetadata->hasSinceVersion());
-        $this->assertSame(isset($data['since']) ? $data['since'] : null, $propertyMetadata->getSinceVersion());
+        self::assertSame(isset($data['since']), $propertyMetadata->hasSinceVersion());
+        self::assertSame(isset($data['since']) ? $data['since'] : null, $propertyMetadata->getSinceVersion());
 
-        $this->assertSame(isset($data['until']), $propertyMetadata->hasUntilVersion());
-        $this->assertSame(isset($data['until']) ? $data['until'] : null, $propertyMetadata->getUntilVersion());
+        self::assertSame(isset($data['until']), $propertyMetadata->hasUntilVersion());
+        self::assertSame(isset($data['until']) ? $data['until'] : null, $propertyMetadata->getUntilVersion());
 
-        $this->assertSame(isset($data['max_depth']), $propertyMetadata->hasMaxDepth());
-        $this->assertSame(isset($data['max_depth']) ? $data['max_depth'] : null, $propertyMetadata->getMaxDepth());
+        self::assertSame(isset($data['max_depth']), $propertyMetadata->hasMaxDepth());
+        self::assertSame(isset($data['max_depth']) ? $data['max_depth'] : null, $propertyMetadata->getMaxDepth());
 
-        $this->assertSame(isset($data['groups']), $propertyMetadata->hasGroups());
-        $this->assertSame(isset($data['groups']) ? $data['groups'] : [], $propertyMetadata->getGroups());
+        self::assertSame(isset($data['groups']), $propertyMetadata->hasGroups());
+        self::assertSame(isset($data['groups']) ? $data['groups'] : [], $propertyMetadata->getGroups());
 
-        $this->assertSame(isset($data['xml_attribute']) && $data['xml_attribute'], $propertyMetadata->isXmlAttribute());
-        $this->assertSame(isset($data['xml_inline']) && $data['xml_inline'], $propertyMetadata->isXmlInline());
-        $this->assertSame(isset($data['xml_value']) && $data['xml_value'], $propertyMetadata->isXmlValue());
-        $this->assertSame(isset($data['xml_entry']) ? $data['xml_entry'] : null, $propertyMetadata->getXmlEntry());
+        self::assertSame(isset($data['xml_attribute']) && $data['xml_attribute'], $propertyMetadata->isXmlAttribute());
+        self::assertSame(isset($data['xml_inline']) && $data['xml_inline'], $propertyMetadata->isXmlInline());
+        self::assertSame(isset($data['xml_value']) && $data['xml_value'], $propertyMetadata->isXmlValue());
+        self::assertSame(isset($data['xml_entry']) ? $data['xml_entry'] : null, $propertyMetadata->getXmlEntry());
 
-        $this->assertSame(
+        self::assertSame(
             isset($data['xml_entry_attribute']) ? $data['xml_entry_attribute'] : null,
             $propertyMetadata->getXmlEntryAttribute()
         );
 
-        $this->assertSame(
+        self::assertSame(
             isset($data['xml_key_as_attribute']) ? $data['xml_key_as_attribute'] : null,
             $propertyMetadata->useXmlKeyAsAttribute()
         );
 
-        $this->assertSame(
+        self::assertSame(
             isset($data['xml_key_as_node']) ? $data['xml_key_as_node'] : null,
             $propertyMetadata->useXmlKeyAsNode()
         );

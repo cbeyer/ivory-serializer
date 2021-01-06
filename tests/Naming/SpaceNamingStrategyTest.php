@@ -16,7 +16,7 @@ use Ivory\Serializer\Naming\SpaceNamingStrategy;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class SpaceNamingStrategyTest extends \PHPUnit_Framework_TestCase
+class SpaceNamingStrategyTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var SpaceNamingStrategy
@@ -26,7 +26,7 @@ class SpaceNamingStrategyTest extends \PHPUnit_Framework_TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->strategy = new SpaceNamingStrategy();
     }
@@ -37,9 +37,9 @@ class SpaceNamingStrategyTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider convertProvider
      */
-    public function testConvert($expected, $name)
+    public function testConvert($expected, $name): void
     {
-        $this->assertSame($expected, $this->strategy->convert($name));
+        self::assertSame($expected, $this->strategy->convert($name));
     }
 
     /**

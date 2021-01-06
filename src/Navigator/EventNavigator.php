@@ -64,17 +64,17 @@ class EventNavigator implements NavigatorInterface
     public function navigate($data, ContextInterface $context, TypeMetadataInterface $type = null)
     {
         $type = $type ?: $this->typeGuesser->guess($data);
-        $serialization = $context->getDirection() === Direction::SERIALIZATION;
+        $serialization = Direction::SERIALIZATION === $context->getDirection();
 
         if ($serialization) {
             $this->dispatcher->dispatch(
-                SerializerEvents::PRE_SERIALIZE,
-                $event = new PreSerializeEvent($data, $type, $context)
+                $event = new PreSerializeEvent($data, $type, $context),
+                SerializerEvents::PRE_SERIALIZE
             );
         } else {
             $this->dispatcher->dispatch(
-                SerializerEvents::PRE_DESERIALIZE,
-                $event = new PreDeserializeEvent($data, $type, $context)
+                $event = new PreDeserializeEvent($data, $type, $context),
+                SerializerEvents::PRE_DESERIALIZE
             );
         }
 
@@ -82,13 +82,13 @@ class EventNavigator implements NavigatorInterface
 
         if ($serialization) {
             $this->dispatcher->dispatch(
-                SerializerEvents::POST_SERIALIZE,
-                new PostSerializeEvent($data, $type, $context)
+                new PostSerializeEvent($data, $type, $context),
+                SerializerEvents::POST_SERIALIZE
             );
         } else {
             $this->dispatcher->dispatch(
-                SerializerEvents::POST_DESERIALIZE,
-                new PostDeserializeEvent($result, $type, $context)
+                new PostDeserializeEvent($result, $type, $context),
+                SerializerEvents::POST_DESERIALIZE
             );
         }
 

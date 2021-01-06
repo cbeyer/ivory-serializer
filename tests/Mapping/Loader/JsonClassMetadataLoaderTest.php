@@ -19,11 +19,9 @@ use Ivory\Serializer\Mapping\Loader\JsonClassMetadataLoader;
  */
 class JsonClassMetadataLoaderTest extends AbstractFileClassMetadataLoaderTest
 {
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testMissingContent()
+    public function testMissingContent(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->loader = $this->createLoader('invalid');
         $this->loadClassMetadata(new ClassMetadata(\stdClass::class));
     }

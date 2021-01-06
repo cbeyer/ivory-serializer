@@ -16,7 +16,7 @@ use Ivory\Serializer\Naming\SnakeCaseNamingStrategy;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class SnakeCaseNamingStrategyTest extends \PHPUnit_Framework_TestCase
+class SnakeCaseNamingStrategyTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var SnakeCaseNamingStrategy
@@ -26,7 +26,7 @@ class SnakeCaseNamingStrategyTest extends \PHPUnit_Framework_TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->strategy = new SnakeCaseNamingStrategy();
     }
@@ -37,9 +37,9 @@ class SnakeCaseNamingStrategyTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider convertProvider
      */
-    public function testConvert($expected, $name)
+    public function testConvert($expected, $name): void
     {
-        $this->assertSame($expected, $this->strategy->convert($name));
+        self::assertSame($expected, $this->strategy->convert($name));
     }
 
     /**

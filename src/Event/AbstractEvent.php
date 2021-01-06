@@ -13,7 +13,7 @@ namespace Ivory\Serializer\Event;
 
 use Ivory\Serializer\Context\ContextInterface;
 use Ivory\Serializer\Mapping\TypeMetadataInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>

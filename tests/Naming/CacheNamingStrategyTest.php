@@ -19,7 +19,7 @@ use Psr\Cache\CacheItemPoolInterface;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CacheNamingStrategyTest extends \PHPUnit_Framework_TestCase
+class CacheNamingStrategyTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var CacheNamingStrategy
@@ -27,19 +27,19 @@ class CacheNamingStrategyTest extends \PHPUnit_Framework_TestCase
     private $cacheNamingStrategy;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|NamingStrategyInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|NamingStrategyInterface
      */
     private $namingStrategy;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|CacheItemPoolInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|CacheItemPoolInterface
      */
     private $pool;
 
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->pool = $this->createCacheItemPoolMock();
         $this->namingStrategy = $this->createNamingStrategyMock();
@@ -47,66 +47,66 @@ class CacheNamingStrategyTest extends \PHPUnit_Framework_TestCase
         $this->cacheNamingStrategy = new CacheNamingStrategy($this->namingStrategy, $this->pool);
     }
 
-    public function testCacheHit()
+    public function testCacheHit(): void
     {
         $this->pool
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getItem')
-            ->with($this->identicalTo($name = 'fooBar'))
-            ->will($this->returnValue($item = $this->createCacheItemMock()));
+            ->with(self::identicalTo($name = 'fooBar'))
+            ->will(self::returnValue($item = $this->createCacheItemMock()));
 
         $item
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('isHit')
-            ->will($this->returnValue(true));
+            ->will(self::returnValue(true));
 
         $item
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('get')
-            ->will($this->returnValue($result = 'foo_bar'));
+            ->will(self::returnValue($result = 'foo_bar'));
 
         $this->namingStrategy
             ->expects($this->never())
             ->method('convert');
 
-        $this->assertSame($result, $this->cacheNamingStrategy->convert($name));
+        self::assertSame($result, $this->cacheNamingStrategy->convert($name));
     }
 
-    public function testCacheMiss()
+    public function testCacheMiss(): void
     {
         $this->pool
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getItem')
-            ->with($this->identicalTo($name = 'fooBar'))
-            ->will($this->returnValue($item = $this->createCacheItemMock()));
+            ->with(self::identicalTo($name = 'fooBar'))
+            ->will(self::returnValue($item = $this->createCacheItemMock()));
 
         $item
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('isHit')
-            ->will($this->returnValue(false));
+            ->will(self::returnValue(false));
 
         $this->namingStrategy
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('convert')
-            ->with($this->identicalTo($name))
-            ->will($this->returnValue($result = 'foo_bar'));
+            ->with(self::identicalTo($name))
+            ->will(self::returnValue($result = 'foo_bar'));
 
         $item
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('set')
-            ->with($this->identicalTo($result))
+            ->with(self::identicalTo($result))
             ->will($this->returnSelf());
 
         $this->pool
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('save')
-            ->with($this->identicalTo($item));
+            ->with(self::identicalTo($item));
 
-        $this->assertSame($result, $this->cacheNamingStrategy->convert($name));
+        self::assertSame($result, $this->cacheNamingStrategy->convert($name));
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|NamingStrategyInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|NamingStrategyInterface
      */
     private function createNamingStrategyMock()
     {
@@ -114,7 +114,7 @@ class CacheNamingStrategyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|CacheItemPoolInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|CacheItemPoolInterface
      */
     private function createCacheItemPoolMock()
     {
@@ -122,7 +122,7 @@ class CacheNamingStrategyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|CacheItemInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|CacheItemInterface
      */
     private function createCacheItemMock()
     {

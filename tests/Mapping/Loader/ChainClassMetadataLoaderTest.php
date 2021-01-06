@@ -19,7 +19,7 @@ use Ivory\Serializer\Mapping\Loader\MappedClassMetadataLoaderInterface;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class ChainClassMetadataLoaderTest extends \PHPUnit_Framework_TestCase
+class ChainClassMetadataLoaderTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var ChainClassMetadataLoader
@@ -27,19 +27,19 @@ class ChainClassMetadataLoaderTest extends \PHPUnit_Framework_TestCase
     private $loader;
 
     /**
-     * @var ClassMetadataLoaderInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var ClassMetadataLoaderInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     private $firstLoader;
 
     /**
-     * @var MappedClassMetadataLoaderInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var MappedClassMetadataLoaderInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     private $secondLoader;
 
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->firstLoader = $this->createClassMetadataLoaderMock();
         $this->secondLoader = $this->createMappedClassMetadataLoaderMock();
@@ -47,61 +47,61 @@ class ChainClassMetadataLoaderTest extends \PHPUnit_Framework_TestCase
         $this->loader = new ChainClassMetadataLoader([$this->firstLoader, $this->secondLoader]);
     }
 
-    public function testInheritance()
+    public function testInheritance(): void
     {
-        $this->assertInstanceOf(ClassMetadataLoaderInterface::class, $this->loader);
+        self::assertInstanceOf(ClassMetadataLoaderInterface::class, $this->loader);
     }
 
-    public function testClassMetadata()
+    public function testClassMetadata(): void
     {
         $classMetadata = new ClassMetadata(\stdClass::class);
 
         $this->firstLoader
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadClassMetadata')
-            ->with($this->identicalTo($classMetadata))
-            ->will($this->returnValue(false));
+            ->with(self::identicalTo($classMetadata))
+            ->will(self::returnValue(false));
 
         $this->secondLoader
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadClassMetadata')
-            ->with($this->identicalTo($classMetadata))
-            ->will($this->returnValue(true));
+            ->with(self::identicalTo($classMetadata))
+            ->will(self::returnValue(true));
 
-        $this->assertTrue($this->loader->loadClassMetadata($classMetadata));
+        self::assertTrue($this->loader->loadClassMetadata($classMetadata));
     }
 
-    public function testClassMetadataNotFound()
+    public function testClassMetadataNotFound(): void
     {
         $classMetadata = new ClassMetadata(\stdClass::class);
 
         $this->firstLoader
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadClassMetadata')
-            ->with($this->identicalTo($classMetadata))
-            ->will($this->returnValue(false));
+            ->with(self::identicalTo($classMetadata))
+            ->will(self::returnValue(false));
 
         $this->secondLoader
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadClassMetadata')
-            ->with($this->identicalTo($classMetadata))
-            ->will($this->returnValue(false));
+            ->with(self::identicalTo($classMetadata))
+            ->will(self::returnValue(false));
 
-        $this->assertFalse($this->loader->loadClassMetadata($classMetadata));
+        self::assertFalse($this->loader->loadClassMetadata($classMetadata));
     }
 
-    public function testMappedClasses()
+    public function testMappedClasses(): void
     {
         $this->secondLoader
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getMappedClasses')
-            ->will($this->returnValue($classes = [\stdClass::class]));
+            ->will(self::returnValue($classes = [\stdClass::class]));
 
-        $this->assertSame($classes, $this->loader->getMappedClasses());
+        self::assertSame($classes, $this->loader->getMappedClasses());
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ClassMetadataLoaderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|ClassMetadataLoaderInterface
      */
     private function createClassMetadataLoaderMock()
     {
@@ -109,7 +109,7 @@ class ChainClassMetadataLoaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|MappedClassMetadataLoaderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|MappedClassMetadataLoaderInterface
      */
     private function createMappedClassMetadataLoaderMock()
     {

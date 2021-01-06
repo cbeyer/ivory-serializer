@@ -20,7 +20,7 @@ use Psr\Cache\CacheItemPoolInterface;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-class CacheClassMetadataFactoryTest extends \PHPUnit_Framework_TestCase
+class CacheClassMetadataFactoryTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var CacheClassMetadataFactory
@@ -28,19 +28,19 @@ class CacheClassMetadataFactoryTest extends \PHPUnit_Framework_TestCase
     private $cacheFactory;
 
     /**
-     * @var ClassMetadataFactoryInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var ClassMetadataFactoryInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     private $factory;
 
     /**
-     * @var CacheItemPoolInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var CacheItemPoolInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     private $pool;
 
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->factory = $this->createClassMetadataFactoryMock();
         $this->pool = $this->createCacheItemPoolMock();
@@ -48,71 +48,71 @@ class CacheClassMetadataFactoryTest extends \PHPUnit_Framework_TestCase
         $this->cacheFactory = new CacheClassMetadataFactory($this->factory, $this->pool);
     }
 
-    public function testInheritance()
+    public function testInheritance(): void
     {
-        $this->assertInstanceOf(ClassMetadataFactoryInterface::class, $this->cacheFactory);
+        self::assertInstanceOf(ClassMetadataFactoryInterface::class, $this->cacheFactory);
     }
 
-    public function testClassMetadata()
+    public function testClassMetadata(): void
     {
         $this->pool
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getItem')
-            ->with($this->identicalTo('foo_bar'))
-            ->will($this->returnValue($item = $this->createCacheItemMock()));
+            ->with(self::identicalTo('foo_bar'))
+            ->will(self::returnValue($item = $this->createCacheItemMock()));
 
         $item
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('isHit')
-            ->will($this->returnValue(false));
+            ->will(self::returnValue(false));
 
         $this->factory
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getClassMetadata')
-            ->with($this->identicalTo($class = 'foo\bar'))
-            ->will($this->returnValue($classMetadata = $this->createClassMetadataMock()));
+            ->with(self::identicalTo($class = 'foo\bar'))
+            ->will(self::returnValue($classMetadata = $this->createClassMetadataMock()));
 
         $item
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('set')
-            ->with($this->identicalTo($classMetadata))
+            ->with(self::identicalTo($classMetadata))
             ->will($this->returnSelf());
 
         $this->pool
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('save')
-            ->with($this->identicalTo($item));
+            ->with(self::identicalTo($item));
 
-        $this->assertSame($classMetadata, $this->cacheFactory->getClassMetadata($class));
+        self::assertSame($classMetadata, $this->cacheFactory->getClassMetadata($class));
     }
 
-    public function testClassMetadataCached()
+    public function testClassMetadataCached(): void
     {
         $this->pool
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getItem')
-            ->with($this->identicalTo('foo_bar'))
-            ->will($this->returnValue($item = $this->createCacheItemMock()));
+            ->with(self::identicalTo('foo_bar'))
+            ->will(self::returnValue($item = $this->createCacheItemMock()));
 
         $item
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('isHit')
-            ->will($this->returnValue(true));
+            ->will(self::returnValue(true));
 
         $item
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('get')
-            ->will($this->returnValue($classMetadata = $this->createClassMetadataMock()));
+            ->will(self::returnValue($classMetadata = $this->createClassMetadataMock()));
 
         $this->factory
             ->expects($this->never())
             ->method('getClassMetadata');
 
-        $this->assertSame($classMetadata, $this->cacheFactory->getClassMetadata('foo\bar'));
+        self::assertSame($classMetadata, $this->cacheFactory->getClassMetadata('foo\bar'));
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ClassMetadataFactoryInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|ClassMetadataFactoryInterface
      */
     private function createClassMetadataFactoryMock()
     {
@@ -120,7 +120,7 @@ class CacheClassMetadataFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|CacheItemPoolInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|CacheItemPoolInterface
      */
     private function createCacheItemPoolMock()
     {
@@ -128,7 +128,7 @@ class CacheClassMetadataFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|CacheItemInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|CacheItemInterface
      */
     private function createCacheItemMock()
     {
@@ -136,7 +136,7 @@ class CacheClassMetadataFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|ClassMetadataInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|ClassMetadataInterface
      */
     private function createClassMetadataMock()
     {
