@@ -29,7 +29,7 @@ class TypeLexer extends AbstractLexer
     /**
      * {@inheritdoc}
      */
-    protected function getCatchablePatterns()
+    protected function getCatchablePatterns(): array
     {
         return [
             '\'(?:[^\']|\'\')*\'',
@@ -40,7 +40,7 @@ class TypeLexer extends AbstractLexer
     /**
      * {@inheritdoc}
      */
-    protected function getNonCatchablePatterns()
+    protected function getNonCatchablePatterns(): array
     {
         return [
             '\s+',
