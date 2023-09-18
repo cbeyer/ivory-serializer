@@ -51,7 +51,7 @@ class TypeLexer extends AbstractLexer
     /**
      * {@inheritdoc}
      */
-    protected function getType(&$value)
+    protected function getType(&$value): int
     {
         if (ctype_alpha($value[0])) {
             return self::T_NAME;
